@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Landmark } from 'lucide-react';
+import { Link, ChartLine, SquarePercent } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const FeatureCards: React.FC = () => {
@@ -15,21 +15,21 @@ export const FeatureCards: React.FC = () => {
       description: '',
       content:
         'Lend assets on Chain X and borrow on Chains Y, Z, and A with up to 80% liquidity.',
-      icon: <Landmark className="h-8 w-8" />,
+      icon: <Link className="h-8 w-8" />,
     },
     {
       title: 'Dynamic APY Optimization',
       description: '',
       content:
         'Experience interest rates that adjust based on pool liquidity for maximum returns.',
-      icon: <Landmark className="h-8 w-8" />,
+      icon: <SquarePercent className="h-8 w-8" />,
     },
     {
       title: 'Interactive APY Estimator',
       description: '',
       content:
         'Visualize and play with APY trends using our "Estimate APY" graphs for smarter decisions.',
-      icon: <Landmark className="h-8 w-8" />,
+      icon: <ChartLine className="h-8 w-8" />,
     },
   ];
 
