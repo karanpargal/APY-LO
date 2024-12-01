@@ -10,7 +10,7 @@ import { getLendRates } from '@/utils/functions/calculateAPY';
 
 const chartConfig = {
   variableRate: {
-    label: 'variableRate',
+    label: 'Variable APY',
     color: '#000',
   },
 } satisfies ChartConfig;
@@ -36,14 +36,11 @@ export const LendAPYGraph = ({ reserve }: { reserve: ComputedReserveData }) => {
           axisLine={false}
           tickMargin={8}
         />
-        <ChartTooltip
-          cursor={false}
-          content={<ChartTooltipContent hideLabel />}
-        />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <Line
           dataKey="variableRate"
           type="linear"
-          stroke="#000"
+          stroke="#945AF4"
           strokeWidth={2}
           dot={false}
         />

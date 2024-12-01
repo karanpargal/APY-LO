@@ -6,6 +6,7 @@ import { Home } from './pages/Home';
 import { Borrowing } from './pages/Borrowing';
 import { CalculateAPY } from './pages/CalculateAPY';
 import './installSesLockdown.ts';
+import { FeedbackForm } from './pages/Feedback';
 
 // import {
 //   makeAgoricChainStorageWatcher,
@@ -105,6 +106,10 @@ function App() {
     {
       path: '/estimate-apy',
       element: <CalculateAPY />,
+    },
+    {
+      path: '/feedback',
+      element: <FeedbackForm />,
     },
   ]);
 

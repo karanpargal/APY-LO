@@ -10,7 +10,7 @@ import { getBorrowRates } from '@/utils/functions/calculateAPY';
 
 const chartConfig = {
   variableRate: {
-    label: 'variableRate',
+    label: 'Variable Interest Rate ',
     color: '#000',
   },
 } satisfies ChartConfig;
@@ -47,7 +47,7 @@ export const BorrowAPYGraph = ({
         <Line
           dataKey="variableRate"
           type="linear"
-          stroke="#000"
+          stroke="#945AF4"
           strokeWidth={2}
           dot={false}
         />

@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@agoric/react-components": "^0.2.0",
+    "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-select": "^2.1.2",
@@ -26,10 +27,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-easy-marquee": "^1.2.4",
+    "react-hook-form": "^7.53.2",
     "react-router-dom": "^6.22.3",
     "recharts": "^2.13.3",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@agoric/notifier": "^0.7.0-u16.1",

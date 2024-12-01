@@ -51,9 +51,8 @@ export const BorrowModal: React.FC<{
                     <SelectValue placeholder="Theme" />
                   </SelectTrigger>
                   <SelectContent className="mt-4 w-64 bg-app-purple text-app-mauve hover:bg-app-purple hover:text-slate-100">
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
+                    <SelectItem value="bld">BLD</SelectItem>
+                    <SelectItem value="ist">IST</SelectItem>
                   </SelectContent>
                 </Select>
                 <Input

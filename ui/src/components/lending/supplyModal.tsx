@@ -48,12 +48,11 @@ export const SupplyModal: React.FC<{
               <div className="flex items-center gap-x-10 py-3 rounded-lg mt-4 bg-app-slate px-4">
                 <Select>
                   <SelectTrigger className="w-64 border-app-purple text-app-charteuse">
-                    <SelectValue placeholder="Theme" />
+                    <SelectValue placeholder="Select Token" />
                   </SelectTrigger>
                   <SelectContent className="mt-4 w-64 bg-app-purple text-app-mauve hover:bg-app-purple hover:text-slate-100">
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
+                    <SelectItem value="bld">BLD</SelectItem>
+                    <SelectItem value="ist">IST</SelectItem>
                   </SelectContent>
                 </Select>
                 <Input
