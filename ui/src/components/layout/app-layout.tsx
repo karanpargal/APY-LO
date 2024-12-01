@@ -42,8 +42,8 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   };
 
   return (
-    <section className="font-iquost px-6 py-2">
-      <div className="flex items-center justify-between">
+    <section className="font-iquost">
+      <div className="flex items-center justify-between  p-6">
         <h1>Logo</h1>
         <Navbar />
         <Button className="relative inline-block px-4 py-2 font-medium group">
@@ -63,8 +63,7 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
           </span>
         </Button>
       </div>
-
-      <div className="py-20 px-10">{children}</div>
+      <div className="">{children}</div>
     </section>
   );
 };
