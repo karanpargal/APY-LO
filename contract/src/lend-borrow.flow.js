@@ -3,7 +3,6 @@ import { makeError, q } from '@endo/errors';
 import { M, mustMatch } from '@endo/patterns';
 import { calculateBorrowAPR } from '../../ui/src/utils/functions/calculateAPY.js';
 
-
 const { entries } = Object;
 
 const state = {
@@ -11,7 +10,7 @@ const state = {
   totalBorrowed: new Map(),
 };
 
-const getOrInitState = (brand) => {
+const getOrInitState = brand => {
   if (!state.totalDeposited.has(brand)) {
     state.totalDeposited.set(brand, 0n);
   }
@@ -27,13 +26,13 @@ const getOrInitState = (brand) => {
 const updateAPY = async (chain, brand, newTotalDeposited, newTotalBorrowed) => {
   const utilizationRate = Number(newTotalBorrowed) / Number(newTotalDeposited);
   const reserveData = await chain.getReserveData(brand);
-  
+
   const borrowAPR = calculateBorrowAPR({
     ...reserveData,
     utilizationRate,
   });
 
-  const lendAPR = borrowAPR * utilizationRate; 
+  const lendAPR = borrowAPR * utilizationRate;
 
   await chain.updateAPY(brand, lendAPR, borrowAPR);
 };
@@ -134,7 +133,7 @@ export const withdraw = async (
   // @ts-expect-error JS and TS are not in sync
   mustMatch(offerArgs, harden({ chainName: M.scalar(), amount: M.amount() }));
   const { chainName, amount } = offerArgs;
-  
+
   log(`Withdrawing {${amount.value}} from ${chainName}`);
   const chain = await orch.getChain(chainName);
   const { denom } = await chain.getAssetInfoForBrand(amount.brand);
@@ -147,8 +146,11 @@ export const withdraw = async (
 
     await updateAPY(chain, amount.brand, newTotalDeposited, totalBorrowed);
 
-    await sharedLocalAccount.withdraw(seat.getProposal().give.Asset, { denom, value: amount.value });
-    
+    await sharedLocalAccount.withdraw(seat.getProposal().give.Asset, {
+      denom,
+      value: amount.value,
+    });
+
     state.totalDeposited.set(amount.brand, newTotalDeposited);
 
     log(`Withdrawal completed`);
@@ -170,7 +172,7 @@ export const repay = async (
   // @ts-expect-error JS and TS are not in sync
   mustMatch(offerArgs, harden({ chainName: M.scalar(), amount: M.amount() }));
   const { chainName, amount } = offerArgs;
-  
+
   log(`Repaying {${amount.value}} to ${chainName}`);
   const chain = await orch.getChain(chainName);
   const { denom } = await chain.getAssetInfoForBrand(amount.brand);
@@ -183,8 +185,11 @@ export const repay = async (
 
     await updateAPY(chain, amount.brand, totalDeposited, newTotalBorrowed);
 
-    await sharedLocalAccount.repay(seat.getProposal().give.Asset, { denom, value: amount.value });
-    
+    await sharedLocalAccount.repay(seat.getProposal().give.Asset, {
+      denom,
+      value: amount.value,
+    });
+
     state.totalBorrowed.set(amount.brand, newTotalBorrowed);
 
     log(`Repayment completed`);
@@ -197,11 +202,11 @@ export const repay = async (
   }
 };
 
-export const getTotalDeposited = (brand) => {
+export const getTotalDeposited = brand => {
   return state.totalDeposited.get(brand) || 0n;
 };
 
-export const getTotalBorrowed = (brand) => {
+export const getTotalBorrowed = brand => {
   return state.totalBorrowed.get(brand) || 0n;
 };
 
