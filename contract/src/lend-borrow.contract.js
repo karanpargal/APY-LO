@@ -25,25 +25,14 @@ export const contract = async (
 ) => {
   const creatorFacet = prepareChainHubAdmin(zone, chainHub);
 
-  // UNTIL https://github.com/Agoric/agoric-sdk/issues/9066
   const logNode = E(privateArgs.storageNode).makeChildNode('log');
   const log = msg => vowTools.watch(E(logNode).setValue(msg));
 
   const { makeLocalAccount } = orchestrateAll(sharedFlows, {});
-  /**
-   * Setup a shared local account for use in async-flow functions. Typically,
-   * exo initState functions need to resolve synchronously, but `makeOnce`
-   * allows us to provide a Promise. When using this inside a flow, we must
-   * await it to ensure the account is available for use.
-   *
-   * @type {any} sharedLocalAccountP expects a Promise but this is a vow
-   *   https://github.com/Agoric/agoric-sdk/issues/9822
-   */
   const sharedLocalAccountP = zone.makeOnce('localAccount', () =>
     makeLocalAccount(),
   );
 
-  // orchestrate uses the names on orchestrationFns to do a "prepare" of the associated behavior
   const orchFns = orchestrateAll(flows, {
     log,
     sharedLocalAccountP,
@@ -51,17 +40,26 @@ export const contract = async (
   });
 
   const publicFacet = zone.exo(
-    'Send PF',
-    M.interface('Send PF', {
-      makeSendInvitation: M.callWhen().returns(InvitationShape),
+    'LendBorrow PF',
+    M.interface('LendBorrow PF', {
+      makeLendInvitation: M.callWhen().returns(InvitationShape),
+      makeBorrowInvitation: M.callWhen().returns(InvitationShape),
     }),
     {
-      makeSendInvitation() {
+      makeLendInvitation() {
         return zcf.makeInvitation(
-          orchFns.sendIt,
-          'send',
+          orchFns.lend,
+          'lend',
           undefined,
           M.splitRecord({ give: SingleNatAmountRecord }),
+        );
+      },
+      makeBorrowInvitation() {
+        return zcf.makeInvitation(
+          orchFns.borrow,
+          'borrow',
+          undefined,
+          M.splitRecord({ want: SingleNatAmountRecord }),
         );
       },
     },

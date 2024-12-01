@@ -1,65 +1,89 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { NonNullish } from '@agoric/internal';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { makeError, q } from '@endo/errors';
 import { M, mustMatch } from '@endo/patterns';
 
 const { entries } = Object;
 
-export const sendIt = async (
+export const lend = async (
   orch,
-  { sharedLocalAccountP, log, zoeTools: { localTransfer, withdrawToSeat } },
+  { sharedLocalAccountP, log, zoeTools: { withdrawToSeat } },
   seat,
   offerArgs,
 ) => {
   mustMatch(offerArgs, harden({ chainName: M.scalar(), destAddr: M.string() }));
   const { chainName, destAddr } = offerArgs;
-  // NOTE the proposal shape ensures that the `give` is a single asset
   const { give } = seat.getProposal();
   const [[_kw, amt]] = entries(give);
-  log(`sending {${amt.value}} from ${chainName} to ${destAddr}`);
-  const agoric = await orch.getChain('agoric');
-  const assets = await agoric.getVBankAssetInfo();
-  log(`got info for denoms: ${assets.map(a => a.denom).join(', ')}`);
-  const { denom } = NonNullish(
-    assets.find(a => a.brand === amt.brand),
-    `${amt.brand} not registered in vbank`,
-  );
 
+  log(`Lending {${amt.value}} on ${chainName} to ${destAddr}`);
   const chain = await orch.getChain(chainName);
-  const info = await chain.getChainInfo();
-  const { chainId } = info;
-  assert(typeof chainId === 'string', 'bad chainId');
-  log(`got info for chain: ${chainName} ${chainId}`);
+  const { denom } = await chain.getAssetInfoForBrand(amt.brand);
 
-  /**
-   * @type {any} XXX methods returning vows
-   *   https://github.com/Agoric/agoric-sdk/issues/9822
-   */
   const sharedLocalAccount = await sharedLocalAccountP;
-  await localTransfer(seat, sharedLocalAccount, give);
-
-  log(`completed transfer to localAccount`);
 
   try {
+    await sharedLocalAccount.deposit(seat.deplete());
+    log(`Funds deposited to local account`);
+
     await sharedLocalAccount.transfer(
       {
         value: destAddr,
         encoding: 'bech32',
-        chainId,
+        chainId: chain.chainId,
       },
       { denom, value: amt.value },
     );
-    log(`completed transfer to ${destAddr}`);
+
+    log(`Lending completed to ${destAddr}`);
+    seat.exit();
   } catch (e) {
     await withdrawToSeat(sharedLocalAccount, seat, give);
-    const errorMsg = `IBC Transfer failed ${q(e)}`;
+    const errorMsg = `Lending failed: ${q(e)}`;
     log(`ERROR: ${errorMsg}`);
     seat.exit(errorMsg);
     throw makeError(errorMsg);
   }
-
-  seat.exit();
-  log(`transfer complete, seat exited`);
 };
-harden(sendIt);
+
+export const borrow = async (
+  orch,
+  { sharedLocalAccountP, log },
+  seat,
+  offerArgs,
+) => {
+  mustMatch(offerArgs, harden({ chainName: M.scalar(), destAddr: M.string() }));
+  const { chainName, destAddr } = offerArgs;
+  const { want } = seat.getProposal();
+  const [[_kw, amt]] = entries(want);
+
+  log(`Borrowing {${amt.value}} from ${chainName} to ${destAddr}`);
+  const chain = await orch.getChain(chainName);
+  const { denom } = await chain.getAssetInfoForBrand(amt.brand);
+
+  const sharedLocalAccount = await sharedLocalAccountP;
+
+  try {
+    await sharedLocalAccount.send(destAddr, { denom, value: amt.value });
+    log(`Funds sent to user's address: ${destAddr}`);
+
+    await sharedLocalAccount.transfer(
+      {
+        value: destAddr,
+        encoding: 'bech32',
+        chainId: chain.chainId,
+      },
+      { denom, value: amt.value },
+    );
+
+    log(`Borrowing completed`);
+    seat.exit();
+  } catch (e) {
+    const errorMsg = `Borrowing failed: ${q(e)}`;
+    log(`ERROR: ${errorMsg}`);
+    seat.exit(errorMsg);
+    throw makeError(errorMsg);
+  }
+};
+
+harden(lend);
+harden(borrow);
