@@ -1,5 +1,3 @@
-import { li } from 'motion/react-client';
-
 export const Footer: React.FC = () => {
   const FooterDetails = [
     {
@@ -20,7 +18,9 @@ export const Footer: React.FC = () => {
   ];
   return (
     <footer className="p-20 h-72 flex item-center justify-between text-left bg-app-slate m-10 rounded-xl border-app-purple border shadow-lg">
-      <h1 className="w-3/4">Logo</h1>
+      <h1 className="text-4xl w-3/4 font-extrabold text-white tracking-wide animate-pulse">
+        APY-LO
+      </h1>
       <div className="flex gap-y-3 justify-between my-auto items-center w-full">
         {FooterDetails.map((footer, index) => (
           <div className="flex flex-col space-y-6" key={index}>
