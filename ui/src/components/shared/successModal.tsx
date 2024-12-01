@@ -28,7 +28,7 @@ export const SuccessModal: React.FC<{
     <Dialog open={isOpen}>
       <DialogContent className="p-4 max-w-sm w-full tracking-wide bg-white">
         <DialogHeader>
-          <DialogTitle className="flex flex-col justify-center items-center gap-y-6">
+          <DialogTitle className="flex flex-col justify-center items-center gap-y-6 border-dashed border-b p-4 border-app-slate">
             {/* <img src={success} alt="success" className="h-20 w-20" /> */}
             <div className="flex flex-col justify-center items-center gap-y-3">
               <p className="font-semibold text-2xl text-app-purple">
@@ -41,18 +41,18 @@ export const SuccessModal: React.FC<{
             </div>
           </DialogTitle>
           <DialogDescription>
-            <div className="flex items-center justify-center gap-x-2 py-6 my-6">
+            <div className="flex items-center justify-center gap-x-2 py-6 my-2">
               {/* <img src={tokenData?.icon} alt="tokenCoin" className="h-7 w-7" /> */}
               <p className="text-app-purple text-2xl font-semibold">20</p>
             </div>
 
-            <ul>
+            <ul className="bg-app-slate p-2 rounded-lg">
               {successData.map(({ label, data }) => (
                 <li
-                  className="flex justify-between items-center py-2 first:border-b first:border-b-app-violet"
+                  className="flex justify-between items-center py-2 "
                   key={label}
                 >
-                  <p className="text-sm text-app-violet">{label}</p>
+                  <p className="text-sm text-app-charteuse">{label}</p>
                   <div
                     className="flex items-center gap-x-2 cursor-pointer"
                     // onClick={() => {
@@ -62,28 +62,24 @@ export const SuccessModal: React.FC<{
                     //   );
                     // }}
                   >
-                    <p
-                      className={
-                        label === 'Transaction'
-                          ? 'text-purple text-sm font-medium'
-                          : 'text-white  text-sm font-medium'
-                      }
-                    >
-                      {data}
-                    </p>
+                    <p className="text-app-purple">{data}</p>
                   </div>
                 </li>
               ))}
             </ul>
-            <DialogClose className="mt-4 w-full">
+
+            <DialogClose className="w-full">
               <Button
-                className="py-5 w-full border border-app-slate text-app-purple hover:text-app-purple"
-                variant={'secondary'}
+                className="relative inline-flex items-center justify-center w-full h-12 px-4 py-3 align-middle font-medium group mt-6 rounded-lg"
                 onClick={() => {
                   setIsOpen(false);
                 }}
               >
-                Done
+                <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform rounded-lg translate-x-1 translate-y-1 bg-app-mauve group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-white border-2 border-app-mauve rounded-lg group-hover:bg-app-mauve"></span>
+                <span className="relative text-black group-hover:text-white text-center rounded-lg font-semibold text-lg">
+                  Done
+                </span>
               </Button>
             </DialogClose>
           </DialogDescription>

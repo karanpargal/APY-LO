@@ -8,8 +8,8 @@ import {
 import { Button } from '../ui/button';
 import { LendTableProps } from '@/utils/types/shared-types';
 import { useEffect, useState } from 'react';
-import { SuccessModal } from '../shared/successModal';
 import { StargateClient } from '@cosmjs/stargate';
+import { SupplyModal } from './supplyModal';
 
 export const LendTable: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,7 +49,7 @@ export const LendTable: React.FC = () => {
         ]
       : ['Asset', 'Price', 'vAPY', 'Total Supplied', 'Action'];
 
-  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
+  const [openSupplyModal, setOpenSupplyModal] = useState<boolean>(false);
 
   const txnHash = '0x12345abcdef';
   const amount = 100;
@@ -118,7 +118,7 @@ export const LendTable: React.FC = () => {
               <TableCell>
                 <Button
                   className="relative inline-block px-4 py-2 font-medium group w-48"
-                  onClick={() => setOpenSuccessModal(true)}
+                  onClick={() => setOpenSupplyModal(true)}
                 >
                   <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-app-slate group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
                   <span className="absolute inset-0 w-full h-full bg-white border-2 border-app-slate group-hover:bg-app-slate"></span>
@@ -132,11 +132,10 @@ export const LendTable: React.FC = () => {
         </TableBody>
       </Table>
       {/* Success Modal */}
-      <SuccessModal
-        isOpen={openSuccessModal}
-        setIsOpen={setOpenSuccessModal}
+      <SupplyModal
+        isOpen={openSupplyModal}
+        setIsOpen={setOpenSupplyModal}
         txnHash={txnHash}
-        action="Supply"
         amount={amount}
       />
     </div>

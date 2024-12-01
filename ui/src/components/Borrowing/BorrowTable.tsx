@@ -8,10 +8,12 @@ import {
 import { Button } from '../ui/button';
 import { BorrowTableProps } from '@/utils/types/shared-types';
 import { useEffect, useState } from 'react';
+import { BorrowModal } from './BorrowModal';
 
 export const BorrowTable: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [wallet, setWallet] = useState<any>();
+  const [openBorrowModal, setOpenBorrowModal] = useState<boolean>(false);
   const TableDetails: BorrowTableProps[] = [
     {
       asset: 'BLD',
@@ -26,6 +28,8 @@ export const BorrowTable: React.FC = () => {
       totalBorrowed: 1201,
     },
   ];
+  const txnHash = '0x12345abcdef';
+  const amount = 100;
 
   const tableHeaders =
     wallet !== ''
@@ -74,7 +78,10 @@ export const BorrowTable: React.FC = () => {
             </TableCell>
             {wallet !== '' && <TableCell>0</TableCell>}
             <TableCell>
-              <Button className="relative inline-block px-4 py-2 font-medium group w-48">
+              <Button
+                onClick={() => setOpenBorrowModal(true)}
+                className="relative inline-block px-4 py-2 font-medium group w-48"
+              >
                 <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-app-slate group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
                 <span className="absolute inset-0 w-full h-full bg-white border-2 border-app-slate group-hover:bg-app-slate"></span>
                 <span className="relative text-black group-hover:text-white">
@@ -85,6 +92,12 @@ export const BorrowTable: React.FC = () => {
           </TableRow>
         ))}
       </TableBody>
+      <BorrowModal
+        isOpen={openBorrowModal}
+        setIsOpen={setOpenBorrowModal}
+        txnHash={txnHash}
+        amount={amount}
+      />
     </Table>
   );
 };
