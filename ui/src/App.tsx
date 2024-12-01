@@ -1,8 +1,9 @@
 import './App.css';
-import AppLayout from './components/layout.tsx/app-layout';
+import AppLayout from './components/layout/app-layout';
 import { useRoutes } from 'react-router-dom';
 import { Lending } from './pages/Lending';
 import { Home } from './pages/Home';
+import { Borrowing } from './pages/Borrowing';
 
 // import {
 //   makeAgoricChainStorageWatcher,
@@ -94,6 +95,10 @@ function App() {
     {
       path: '/lending',
       element: <Lending />,
+    },
+    {
+      path: '/borrowing',
+      element: <Borrowing />,
     },
   ]);
 

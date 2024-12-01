@@ -15,6 +15,10 @@ export const Navbar: React.FC = () => {
       url: '/Borrowing',
     },
     {
+      name: 'Estimate APY',
+      url: '/estimate-apy',
+    },
+    {
       name: 'FeedBack',
       url: '/feedback',
     },

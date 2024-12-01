@@ -4,3 +4,9 @@ export interface LendTableProps {
   vAPY: number;
   totalSupplied: number;
 }
+
+export interface SuccessData {
+  label: string;
+  data: string | JSX.Element;
+  iconUrl?: string;
+}
