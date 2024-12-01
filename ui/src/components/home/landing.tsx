@@ -6,8 +6,8 @@ import { ChevronsUpDown } from 'lucide-react';
 export const Landing: React.FC = () => {
   const data = ['Lend It', 'Borrow It', 'Stake It', 'Farm It', 'Trade It'];
   return (
-    <div>
-      <div className="flex justify-between items-center py-20 px-20">
+    <div className="bg-gray-50 h-screen">
+      <div className="flex justify-between items-center py-20 px-20 ">
         <div className="flex flex-col gap-y-4 text-left">
           <h1 className="text-7xl font-bold text-app-purple">
             Something coming up
@@ -23,7 +23,7 @@ export const Landing: React.FC = () => {
         <img src={hero} alt="Hero" />
       </div>
 
-      <div className="pt-20">
+      <div className="pt-16">
         <div className="relative w-screen rotate-6 bg-app-charteuse overflow">
           <Marquee
             className="text-app-purple font-bold text-xl py-6"
@@ -55,7 +55,7 @@ export const Landing: React.FC = () => {
           </Marquee>
         </div>
 
-        <p className="flex justify-center mt-10 items-center  animate-scrollDown">
+        <p className="flex justify-center mt-20 items-center  animate-scrollDown">
           scroll <ChevronsUpDown className="h-10 w-10 text-black mx-2" />
           down
         </p>
