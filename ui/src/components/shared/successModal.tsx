@@ -20,43 +20,39 @@ export const SuccessModal: React.FC<{
   const successData: SuccessData[] = useMemo(
     () => [
       { label: 'Total Amount', data: `240` },
-      { label: 'APY', data: '4.5%' },
       { label: 'Transaction', data: 'txnHash' },
     ],
     [amount, txnHash],
   );
   return (
     <Dialog open={isOpen}>
-      <DialogContent className="p-4 max-w-sm w-full">
+      <DialogContent className="p-4 max-w-sm w-full tracking-wide bg-white">
         <DialogHeader>
           <DialogTitle className="flex flex-col justify-center items-center gap-y-6">
             {/* <img src={success} alt="success" className="h-20 w-20" /> */}
             <div className="flex flex-col justify-center items-center gap-y-3">
-              <p className="text-base font-semibold">
+              <p className="font-semibold text-2xl text-app-purple">
                 {action === 'Supply' ? 'Deposit' : action} Completed
               </p>
-              <p className="text-sm text-center text-secondaryText w-72">
+              <p className="text-sm text-center text-app-violet w-72">
                 Congratulations on your{' '}
-                {action === 'Supply' ? 'deposit' : action.toLowerCase()} with
-                Positions Finance
+                {action === 'Supply' ? 'deposit' : action.toLowerCase()}
               </p>
             </div>
           </DialogTitle>
           <DialogDescription>
-            <div className="flex items-center justify-center gap-x-2 border-t border-b py-6 my-6">
+            <div className="flex items-center justify-center gap-x-2 py-6 my-6">
               {/* <img src={tokenData?.icon} alt="tokenCoin" className="h-7 w-7" /> */}
-              <p className="text-2xl font-semibold text-white">
-                {/* {amount} {tokenData?.type} */}
-              </p>
+              <p className="text-app-purple text-2xl font-semibold">20</p>
             </div>
 
             <ul>
               {successData.map(({ label, data }) => (
                 <li
-                  className="flex justify-between items-center py-2"
+                  className="flex justify-between items-center py-2 first:border-b first:border-b-app-violet"
                   key={label}
                 >
-                  <p className="text-sm">{label}</p>
+                  <p className="text-sm text-app-violet">{label}</p>
                   <div
                     className="flex items-center gap-x-2 cursor-pointer"
                     // onClick={() => {
@@ -69,7 +65,7 @@ export const SuccessModal: React.FC<{
                     <p
                       className={
                         label === 'Transaction'
-                          ? 'text-citrine text-sm font-medium'
+                          ? 'text-purple text-sm font-medium'
                           : 'text-white  text-sm font-medium'
                       }
                     >
@@ -81,7 +77,7 @@ export const SuccessModal: React.FC<{
             </ul>
             <DialogClose className="mt-4 w-full">
               <Button
-                className="py-3 w-full"
+                className="py-5 w-full border border-app-slate text-app-purple hover:text-app-purple"
                 variant={'secondary'}
                 onClick={() => {
                   setIsOpen(false);

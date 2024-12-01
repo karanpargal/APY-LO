@@ -1,10 +1,11 @@
+import { FeatureCards } from '@/components/home/feature-cards';
+import { Landing } from '@/components/home/landing';
+
 export const Home: React.FC = () => {
   return (
     <section>
-      {/* <div>
-        <h1>Home</h1>
-        <p>Welcome to the home page</p>
-      </div> */}
+      <Landing />
+      <FeatureCards />
     </section>
   );
 };

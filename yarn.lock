@@ -11786,6 +11786,7 @@ __metadata:
     puppeteer: "npm:^21.9.0"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
+    react-easy-marquee: "npm:^1.2.4"
     react-router-dom: "npm:^6.22.3"
     ses: "npm:^1.8.0"
     tailwind-merge: "npm:^2.5.5"
@@ -14559,6 +14560,15 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/66dfc5f93e13d0674e78ef41f92ed21dfb80f9c4ac4ac25a4b51046d41d4d2186abc915b897f69d3d0ebbffe6184e7c5876f2af26bfa956f179225d921be713a
+  languageName: node
+  linkType: hard
+
+"react-easy-marquee@npm:^1.2.4":
+  version: 1.2.4
+  resolution: "react-easy-marquee@npm:1.2.4"
+  peerDependencies:
+    react: ^17.0.2
+  checksum: 10c0/42242c9c00a9403ff67a0dde5c069413fefbc05cfc14cd7aa3c3d76be99447ba48f077381de163a72a0b307353ff3a500f6d02a92a62a15120a8fdc378f3cd71
   languageName: node
   linkType: hard
 
