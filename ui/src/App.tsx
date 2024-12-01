@@ -4,6 +4,8 @@ import { useRoutes } from 'react-router-dom';
 import { Lending } from './pages/Lending';
 import { Home } from './pages/Home';
 import { Borrowing } from './pages/Borrowing';
+import { CalculateAPY } from './pages/CalculateAPY';
+import './installSesLockdown.ts';
 
 // import {
 //   makeAgoricChainStorageWatcher,
@@ -99,6 +101,10 @@ function App() {
     {
       path: '/borrowing',
       element: <Borrowing />,
+    },
+    {
+      path: '/estimate-apy',
+      element: <CalculateAPY />,
     },
   ]);
 
