@@ -44,7 +44,9 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   return (
     <section className="font-iquost">
       <div className="flex items-center justify-between  p-6 bg-gray-50">
-        <h1>Logo</h1>
+        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 tracking-wide animate-pulse">
+          APY-LO
+        </h1>
         <Navbar />
         <Button className="relative inline-block px-4 py-2 font-medium group">
           <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-app-mauve group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
