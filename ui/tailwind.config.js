@@ -14,6 +14,7 @@ export default {
           charteuse: '#e0ff50',
           purple: '#150e26',
           mauve: '#e9aefc',
+          pale: '#eaddf0',
         },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
