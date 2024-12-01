@@ -43,12 +43,12 @@ export const Landing: React.FC = () => {
     <div className="bg-gray-50 h-screen">
       <div className="flex justify-between items-center py-20 px-20 ">
         <div className="flex flex-col gap-y-4 text-left">
-          <h1 className="text-7xl font-bold text-app-purple">
-            Something coming up
+          <h1 className="text-6xl font-bold text-app-purple">
+            Cross-Chain Lending & Borrowing Simplified
           </h1>
           <p className="text-xl font-medium text-app-violet">
-            Lorem ipsum dolor sit amet, consectetur <br /> adipiscing elit. Sed
-            do eiusmod tempor incididunt ut
+            Maximize Earnings, Borrow Seamlessly Across Chains, Explore Dynamic
+            APY
           </p>
           <Button className="relative inline-flex items-center justify-center w-96 h-14 px-4 py-3 align-middle font-medium group mt-6">
             <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-app-mauve group-hover:-translate-x-0 group-hover:-translate-y-0"></span>

@@ -16,23 +16,32 @@ export const Timeline: React.FC = () => {
     {
       id: 1,
       title: 'Connect Wallet',
-      description: 'Securely connect your wallet to begin.',
+      description:
+        'Connect your wallet to start cross-chain lending & borrowing.',
     },
-    { id: 2, title: 'Lend', description: 'Lend assets to earn rewards.' },
+    {
+      id: 2,
+      title: 'Lend',
+      description:
+        'Deposit your assets on any chain to start earning dynamic APY rewards.',
+    },
     {
       id: 3,
       title: 'Borrow',
-      description: 'Borrow using your collateral safely.',
+      description:
+        'Leverage upto 80% of your liquidity to borrow seamlessly across multi chains.',
     },
     {
       id: 4,
       title: 'Analyze',
-      description: 'Track and optimize your financial journey.',
+      description:
+        'Use detailed analytics to track your positions for better decision-making.',
     },
     {
       id: 5,
       title: 'Provide Feedback',
-      description: 'Track and optimize your financial journey.',
+      description:
+        'Share your thoughts to help us enhance your experience with APY-LO.',
     },
   ];
 
@@ -61,7 +70,6 @@ export const Timeline: React.FC = () => {
       </p>
       <div className="container mx-auto px-4 mt-20">
         <div className="relative flex justify-center">
-          {/* Background Line */}
           <div className="relative w-2 bg-gray-300 rounded h-screen">
             <motion.div
               className="absolute left-1/2 -translate-x-1/2 bg-app-mauve rounded w-2"
@@ -83,19 +91,18 @@ export const Timeline: React.FC = () => {
                 transition={{ duration: 0.5, delay: index * 0.2 }}
               >
                 <Card className="w-96 shadow-md p-4 mx-4 bg-white">
-                  <CardHeader>
+                  <CardHeader className="py-2 pb-4">
                     <CardTitle className="text-2xl font-medium text-app-slate">
                       {stage.title}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-lg text-gray-600">
+                    <CardDescription className="text-base text-gray-600">
                       {stage.description}
                     </CardDescription>
                   </CardContent>
                 </Card>
 
-                {/* Connecting Dots */}
                 <div className="absolute flex flex-col items-center justify-center top-0 left-[50%] transform -translate-x-[50%]">
                   <div className="w-3 h-3 bg-app-purple rounded-full"></div>
                   {index < stages.length - 1 && (
