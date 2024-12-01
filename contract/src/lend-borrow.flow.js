@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { makeError, q } from '@endo/errors';
 import { M, mustMatch } from '@endo/patterns';
-import { calculateBorrowAPR } from '../../ui/src/utils/functions/calculateAPY.js';
+import { calculateBorrowAPR } from './calculateAPY.js';
 
 const { entries } = Object;
 
