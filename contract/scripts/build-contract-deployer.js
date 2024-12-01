@@ -12,19 +12,19 @@
  */
 
 import { makeHelpers } from '@agoric/deploy-script-support';
-import { getManifestForOfferUp } from '../src/offer-up-proposal.js';
+import { getManifestForLendBorrow } from '../src/lend-borrow.proposal.js';
 
 /** @type {import('@agoric/deploy-script-support/src/externalTypes.js').ProposalBuilder} */
-export const offerUpProposalBuilder = async ({ publishRef, install }) => {
+export const lendBorrowProposalBuidler = async ({ publishRef, install }) => {
   return harden({
-    sourceSpec: '../src/offer-up-proposal.js',
+    sourceSpec: '../src/lend-borrow.proposal.js',
     getManifestCall: [
-      getManifestForOfferUp.name,
+      getManifestForLendBorrow.name,
       {
         offerUpRef: publishRef(
           install(
-            '../src/offer-up.contract.js',
-            '../bundles/bundle-offer-up.js',
+            '../src/lend-borrow.contract.js',
+            '../bundles/bundle-lend-borrow.js',
             {
               persist: true,
             },
@@ -38,5 +38,5 @@ export const offerUpProposalBuilder = async ({ publishRef, install }) => {
 /** @type {DeployScriptFunction} */
 export default async (homeP, endowments) => {
   const { writeCoreProposal } = await makeHelpers(homeP, endowments);
-  await writeCoreProposal('start-offer-up', offerUpProposalBuilder);
+  await writeCoreProposal('lend-borrow', lendBorrowProposalBuidler);
 };
