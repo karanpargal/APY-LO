@@ -1,0 +1,73 @@
+chains:
+  - id: agoriclocal
+    name: agoric
+    image: ghcr.io/agoric/agoric-sdk:upgrade-17-dev
+    numValidators: 1
+    env:
+      - name: DEBUG
+        value: SwingSet:vat,SwingSet:ls
+    genesis:
+      app_state:
+        staking:
+          params:
+            unbonding_time: '2m'
+        swingset:
+          params:
+            bootstrap_vat_config: '@agoric/vm-config/decentral-itest-orchestration-config.json'
+    scripts:
+      updateConfig:
+        file: scripts/update-config.sh
+    faucet:
+      enabled: false
+    ports:
+      rest: 1317
+      rpc: 26657
+      exposer: 38087
+      grpc: 9090
+    resources:
+      cpu: 0.5
+      memory: 3Gi
+  - id: osmosislocal
+    name: osmosis
+    numValidators: 1
+    genesis:
+      app_state:
+        staking:
+          params:
+            unbonding_time: '2m'
+        interchain_accounts:
+          host_genesis_state:
+            params:
+              host_enabled: true
+              allow_messages: ['*']
+        interchainquery:
+          host_port: 'icqhost'
+          params:
+            host_enabled: true
+            allow_queries:
+              - /cosmos.bank.v1beta1.Query/Balance
+              - /cosmos.bank.v1beta1.Query/AllBalances
+    faucet:
+      enabled: true
+      type: starship
+    ports:
+      rest: 1315
+      rpc: 26655
+      grpc: 9093
+      faucet: 8084
+
+relayers:
+  - name: agoric-osmosis
+    type: hermes
+    replicas: 1
+    chains:
+      - agoriclocal
+      - osmosislocal
+
+explorer:
+  enabled: false
+
+registry:
+  enabled: true
+  ports:
+    rest: 8081
