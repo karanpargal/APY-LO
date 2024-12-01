@@ -34,7 +34,6 @@ const parseProposalParts = txt => {
 const main = (stdin, readFileSync) => {
   const input = readFileSync(stdin.fd).toString();
   const parts = parseProposalParts(input);
-  // relies on console.log printing to stdout unmodified
   console.log(JSON.stringify(parts));
 };
 
