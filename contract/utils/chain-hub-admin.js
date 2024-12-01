@@ -4,7 +4,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { heapVowE } from '@agoric/vow/vat.js';
 import { M } from '@endo/patterns';
-import { CosmosChainInfoShape, DenomDetailShape } from '../typeGuards.js';
+import { CosmosChainInfoShape, DenomDetailShape } from './typeGuards.js';
 
 /**
  * @import {Zone} from '@agoric/zone';

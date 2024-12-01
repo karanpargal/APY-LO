@@ -7,6 +7,13 @@ import {
   CardTitle,
   CardDescription,
 } from '@/components/ui/card';
+import {
+  ChartNoAxesCombined,
+  HandCoins,
+  Handshake,
+  MessageSquareDot,
+  Wallet,
+} from 'lucide-react';
 
 export const Timeline: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -18,30 +25,35 @@ export const Timeline: React.FC = () => {
       title: 'Connect Wallet',
       description:
         'Connect your wallet to start cross-chain lending & borrowing.',
+      icon: <Wallet className="h-6 w-6" />,
     },
     {
       id: 2,
       title: 'Lend',
       description:
         'Deposit your assets on any chain to start earning dynamic APY rewards.',
+      icon: <HandCoins className="h-6 w-6" />,
     },
     {
       id: 3,
       title: 'Borrow',
       description:
         'Leverage upto 80% of your liquidity to borrow seamlessly across multi chains.',
+      icon: <Handshake className="h-6 w-6" />,
     },
     {
       id: 4,
       title: 'Analyze',
       description:
         'Use detailed analytics to track your positions for better decision-making.',
+      icon: <ChartNoAxesCombined className="h-6 w-6" />,
     },
     {
       id: 5,
       title: 'Provide Feedback',
       description:
         'Share your thoughts to help us enhance your experience with APY-LO.',
+      icon: <MessageSquareDot className="h-6 w-6" />,
     },
   ];
 
@@ -92,8 +104,9 @@ export const Timeline: React.FC = () => {
               >
                 <Card className="w-96 shadow-md p-4 mx-4 bg-white">
                   <CardHeader className="py-2 pb-4">
-                    <CardTitle className="text-2xl font-medium text-app-slate">
+                    <CardTitle className="text-2xl font-medium text-app-slate flex items-center gap-x-2">
                       {stage.title}
+                      <span className="text-app-violet">{stage.icon}</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
