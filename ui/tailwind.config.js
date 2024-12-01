@@ -4,12 +4,17 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx,js,jsx}'],
   theme: {
     extend: {
-      borderRadius: {
-        lg: '',
-        md: '',
-        sm: '',
+      fontFamily: {
+        iquost: ['iquost', 'sans-serif'],
       },
       colors: {
+        app: {
+          violet: '#645d72',
+          slate: '#945AF4',
+          charteuse: '#e0ff50',
+          purple: '#150e26',
+          mauve: '#e9aefc',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
