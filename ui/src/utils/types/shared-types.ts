@@ -5,6 +5,13 @@ export interface LendTableProps {
   totalSupplied: number;
 }
 
+export interface BorrowTableProps {
+  asset: string;
+  price: number;
+  interest: number;
+  totalBorrowed: number;
+}
+
 export interface SuccessData {
   label: string;
   data: string | JSX.Element;

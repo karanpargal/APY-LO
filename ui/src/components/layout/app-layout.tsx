@@ -43,7 +43,7 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 
   return (
     <section className="font-iquost">
-      <div className="flex items-center justify-between  p-6">
+      <div className="flex items-center justify-between p-6 pl-12">
         <h1>Logo</h1>
         <Navbar />
         <Button className="relative inline-block px-4 py-2 font-medium group">

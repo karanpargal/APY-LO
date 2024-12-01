@@ -6,27 +6,44 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from '../ui/button';
-import { LendTableProps } from '@/utils/types/shared-types';
+import { BorrowTableProps } from '@/utils/types/shared-types';
+import { useEffect, useState } from 'react';
 
 export const BorrowTable: React.FC = () => {
-  // Define the table data
-  const TableDetails: LendTableProps[] = [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [wallet, setWallet] = useState<any>();
+  const TableDetails: BorrowTableProps[] = [
     {
-      asset: 'USDT',
-      price: 24.66,
-      vAPY: 9.6,
-      totalSupplied: 520,
+      asset: 'BLD',
+      price: 0.1,
+      interest: 6.8,
+      totalBorrowed: 210,
     },
     {
-      asset: 'ETH',
-      price: 1632.55,
-      vAPY: 5.4,
-      totalSupplied: 2450,
+      asset: 'IST',
+      price: 1.0,
+      interest: 6.8,
+      totalBorrowed: 1201,
     },
   ];
 
-  // Define table headers
-  const tableHeaders = ['Asset', 'Price', 'vAPY', 'Total Supplied', 'Action'];
+  const tableHeaders =
+    wallet !== ''
+      ? [
+          'Asset',
+          'Price',
+          'Interest',
+          'Total Borrowed',
+          'Borrowed by You',
+          'Action',
+        ]
+      : ['Asset', 'Price', 'Interest', 'Total Borrowed', 'Action'];
+
+  useEffect(() => {
+    if (localStorage.getItem('wallet')) {
+      setWallet(JSON.parse(localStorage.getItem('wallet') || ''));
+    }
+  }, [localStorage.getItem('wallet')]);
 
   return (
     <Table className="rounded-2xl border border-app-violet bg-slate-50">
@@ -46,9 +63,16 @@ export const BorrowTable: React.FC = () => {
         {TableDetails.map((detail, index) => (
           <TableRow key={index} className="text-center">
             <TableCell className="text-left">{detail.asset}</TableCell>
-            <TableCell>{detail.price.toFixed(2)}</TableCell>
-            <TableCell>{detail.vAPY}%</TableCell>
-            <TableCell>{detail.totalSupplied}</TableCell>
+            <TableCell>${detail.price.toFixed(2)}</TableCell>
+            <TableCell>{detail.interest}%</TableCell>
+            <TableCell>
+              {detail.totalBorrowed +
+                ' ' +
+                detail.asset +
+                ' | $' +
+                detail.price * detail.totalBorrowed}{' '}
+            </TableCell>
+            {wallet !== '' && <TableCell>0</TableCell>}
             <TableCell>
               <Button className="relative inline-block px-4 py-2 font-medium group w-48">
                 <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-app-slate group-hover:-translate-x-0 group-hover:-translate-y-0"></span>

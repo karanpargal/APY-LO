@@ -29,7 +29,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="text-black">
-      <ul className="flex items-center gap-x-6 text-lg font-medium">
+      <ul className="flex items-center gap-x-6 text-lg font-medium pl-20">
         {navItems.map(item => {
           const isActive = location.pathname === item.url;
           return (
