@@ -6,17 +6,17 @@ Built with ☕ and ❤️ at [Unfold 24](https://unfold2024.devfolio.co/).
 
 ## 📝 Table of Contents
 
-- [Goals](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-goals)
-- [Knowledge Primer](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-knowledge-primer)
-- [What Problems Servify Solves](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-what-problems-servify-solves)
-- [Preview](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-preview)
-- [Technology Stack](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-technology-stack)
-- [Architecture](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-architecture)
-- [Emphasis on Tracks](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-emphasis-on-tracks)
-- [Challenges](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-challenges)
-- [What's Next](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#%EF%B8%8F-whats-next)
-- [Contributions](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-contributions)
-- [License](https://github.com/karanpargal/sigmanerds?tab=readme-ov-file#-license)
+- [Goals](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-goals)
+- [Knowledge Primer](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-knowledge-primer)
+- [What Problems Servify Solves](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-what-problems-servify-solves)
+- [Preview](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-preview)
+- [Technology Stack](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-technology-stack)
+- [Architecture](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-architecture)
+- [Emphasis on Tracks](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-emphasis-on-tracks)
+- [Challenges](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-challenges)
+- [What's Next](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#%EF%B8%8F-whats-next)
+- [Contributions](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-contributions)
+- [License](https://github.com/karanpargal/APY-LO?tab=readme-ov-file#-license)
 
 ## 💡 Goals
 
@@ -27,7 +27,7 @@ This project enables seamless cross-chain lending and borrowing, allowing users 
 - **Agoric Orchestration** - Agoric’s Orchestration capability allows developers to easily build cross-chain interactions into existing applications or to create novel cross-chain-focused products.
 - **Keplr Wallet** - Keplr is a free, open-source, non-custodial wallet that allows users to interact with blockchain applications in the Cosmos ecosystem. It's available as a browser extension, mobile app, and webapp.
 
-## 🚩 What Problems Servify Solves
+## 🚩 What Problems APY-LO Solves
 - **Cross-Chain Lending and Borrowing** - Facilitates seamless asset utilization across multiple chains, enabling users to lend on one chain and borrow on others.
 - **Liquidity Optimization** - Provides up to 80% liquidity access, ensuring efficient use of user assets.
 - **Dynamic APY Management** - It adjusts interest rates based on pool liquidity, offering users the best possible returns.
@@ -42,94 +42,35 @@ This project enables seamless cross-chain lending and borrowing, allowing users 
 
 ## 💻 Technology Stack
 
-| Blockchain ⛓️ | Backend 🛠️ |  Frontend ✨  |   Protocols   |
-| :-----------: | :--------: | :-----------: | :-----------: |
-|   Solidity    |    Node    |     Vue     |  Anon Aadhar  |
-|    Scroll     |  Express   |  TypeScript   | Push Protocol |
-|               | TypeScript |    Shadcn     |               |
-|               |  MongoDB   |      Zod      |               |
-|               |            | Framer Motion |               |
-
-
+- **Blockchain** : Hardened JS, Agoric Orchestration API.
+- **UI** : Vite, React, TailwindCSS, Shadcn, Agoric React components.
+- **DevOps** : Docker.
 
 ## 👔 Emphasis on Tracks
 
-### Push Protocol
+### Agoric
 
 - **Usage**:
-  - **Push Notification:** This enables Servify to send real-time notifications to users' wallets or mobile devices, keeping them informed about important events, updates, and reminders.
-  - **Channel Settings:** We have also given user the freedom and choice to select which notification do they want to receive while using our application
-  - **Support Chat**: Used for offering real-time chat support to the users directly, eliminating the need for users to switch to external platforms, creating a seamless and convenient experience.
-  - **P2P Chat:** To facilitate secure and decentralized peer-to-peer communication between users without the need for centralized servers and intermediaries, ensuring privacy and data ownership.
-  - **Token Gated Chat:** Used for restricting access to specific groups of users based on their token ownership. This enables the creation of exclusive communities for high-value users, fostering deeper engagement and loyalty.
-- **Implementation**: Code with the implementation of notifications for Push Protocol is housed in `server/notifications/notifications.service.ts`. [Link](https://github.com/karanpargal/sigmanerds/blob/main/server/notifications/notifications.service.ts)
-  For Chat functionalities, you can visit the Chat pages in the client subdirectory.
-
-### Ethereum Foundation: Anon Aadhar
-
-- **Usage**: Anon Aadhar is being utilised as proof of citizenship and identity in Servify, to maintain anonimity while provisioning credibility.
-- **Implementation**:
-
-**React context provider Anon Aadhaar**
-
-```
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-        <AnonAadhaarProvider _appId={ANON_AADHAAR_APP_ID}>
-          <App />
-        </AnonAadhaarProvider>
-      </RainbowKitProvider>
-    </WagmiConfig>
-  </React.StrictMode>,
-);
-```
-
-**Consuming Anon Aadhar Validation into our Custom Forms**
-
-```
-const [anonAadhaar] = useAnonAadhaar();
-  useEffect(() => {
-    if (anonAadhaar.status === 'logged-in') {
-      formik.setFieldValue('anonAadhaarLoggedIn', true);
-    }
-  }, [anonAadhaar]);
-```
-
-```
-<div className="mb-6">
-        <Label>Verify your identity with Anon Aadhaar</Label>
-        <LogInWithAnonAadhaar />
-        ...
-```
-
-### Scroll
-
-- **Usage**: Contracts pertaining to Servify are deployed on Scroll.
-- **Implementation**: Sepolia Testnet Explorer on https://sepolia.scrollscan.com/
-  - SBT on Scroll: `0x189D6807030b09D86CA4c61c8bfE22DDcA4A682E` [Link](https://sepolia.scrollscan.com/address/0x189D6807030b09D86CA4c61c8bfE22DDcA4A682E)
-  - Escrow on Scroll: `0xC434c7be548A31fb8dA76f0CC3Cf25e51166B039` [Link](https://sepolia.scrollscan.com/address/0xC434c7be548A31fb8dA76f0CC3Cf25e51166B039)
+  - **Agoric Orchestration API:** We utilised Agoric's Orchestration API to create our smart contract which handles lending, borrowing across multiple chains.
+  - **Agoric React components:** We utilised Agoric's React UI component library as well to use hooks and few components to make our application more lively.
 
 ## 💪 Challenges Faced (and WAGMI!)
 
-- **Developer Experience of SDKs**: Inadequate or unclear documentation did significantly hinder our developer experience as implementation was difficult in the given duration with limited support.
-- **Figuring out the Settlement Flow**: Another challenge we encountered was optimizing the settlement flow, especially in cases where users were dissatisfied with the service provided. Balancing flexibility for both users and providers presented a nuanced trade-off.
-  - Ultimately, we resolved this by implementing a support chat feature. This solution aimed to address user concerns efficiently, allowing for real-time communication and issue resolution.
-  - The introduction of the support chat provided a streamlined approach to handle disputes or dissatisfaction, promoting a user-centric and responsive system for dispute resolution within the service.
+- Agoric's Multi Chain Testing Kit was difficult to run initially in our local as it required high end specifications but with the help of their team, we got a low specification version as well and were able to complete it.
+- It was our first time building on Agoric and it was challenging to write smart contract and build around non EVM environment.
 
 ## ⏭️ What's Next
 
-- **Enable direct off-ramping of cryptocurrency**: Enabling direct off-ramping of cryptocurrency can be simplified through the integration of the Saber SDK by Mudrex. This SDK streamlines the process, allowing for a seamless conversion of crypto assets into traditional fiat currencies. With Mudrex's Saber SDK, users can efficiently and directly withdraw their crypto holdings, providing a user-friendly and convenient off-ramping solution. The SDK's features facilitate a straightforward experience, ensuring that users can easily convert and access the value of their cryptocurrencies in traditional financial systems. This integration enhances accessibility and usability, contributing to a more versatile and user-centric crypto off-ramping experience.
+- **Goverance DAO**: Having a Goverance based voting proposals running to formulate our application more towards the user and not being the centralised authority over it.
 
-- **Enable easier on-boarding with the help of OKTO Wallet**: Okto Wallet or any similar wallet service can enhance the onboarding experience for users, making it efficient, secure, and user-friendly.
+- **Onramp / Offramp**: On-ramp and Off-ramp capabilities to ensure more web2 users are willing to pivot to our application.
 
 ## 🤝 Contributions
 
-Meet the creators of Servify:
+Meet the creators of APY-LO:
 
-<a href="https://github.com/karanpargal/sigmanerds/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=karanpargal/sigmanerds" alt="Contributors">
+<a href="https://github.com/karanpargal/APY-LO/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=karanpargal/APY-LO" alt="Contributors">
 </a>
 
 We are not open to receiving contributions to this project at this moment. If you'd like to highlight any bugs or pass on recommendations, you can always open an issue and give us a heads up!
