@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea'; // Assuming you have a Textarea component.
+import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -44,7 +44,6 @@ export const FeedbackForm: React.FC = () => {
     },
   });
 
-  // Define the onSubmit function
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log('Form Data:', data);
   };

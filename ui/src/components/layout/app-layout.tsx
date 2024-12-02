@@ -14,7 +14,12 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   return (
     <section className="font-iquost">
       <div className="flex items-center justify-between  p-6 bg-gray-50">
-        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 tracking-wide animate-pulse">
+        <h1
+          className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 tracking-wide animate-pulse cursor-pointer"
+          onClick={() => {
+            window.location.href = '/';
+          }}
+        >
           APY-LO
         </h1>
         <Navbar />
@@ -31,11 +36,13 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
         </Button>
       </div>
       <div className="absolute flex justify-end w-full py-2 px-6 bg-gray-50">
-        <NetworkDropdown
-          appearance="minimal"
-          size="sm"
-          label="Switch your network"
-        />
+        {address && (
+          <NetworkDropdown
+            appearance="minimal"
+            size="sm"
+            label="Switch your network"
+          />
+        )}
       </div>
       <div className="">{children}</div>
     </section>
