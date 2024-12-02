@@ -17,20 +17,25 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { SuccessModal } from '../shared/successModal';
+import { useAgoric } from '@agoric/react-components';
 
 export const BorrowModal: React.FC<{
   isOpen: boolean;
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
-
   txnHash: string;
   amount: number;
 }> = ({ isOpen, setIsOpen, txnHash, amount }) => {
   const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
+  const { purses } = useAgoric();
+
+  const istPurse = purses?.find(p => p.brandPetname === 'IST');
+  const bldPurse = purses?.find(p => p.brandPetname === 'BLD');
+
+  const [selectedAsset, setSelectedAsset] = useState<string>('ist');
+  const selectedPurse = selectedAsset === 'ist' ? istPurse : bldPurse;
 
   const handleSupplyClick = () => {
-    // Close the SupplyModal
     setIsOpen(false);
-    // Open the SuccessModal
     setOpenSuccessModal(true);
   };
 
@@ -46,9 +51,9 @@ export const BorrowModal: React.FC<{
             </DialogTitle>
             <DialogDescription className="flex flex-col gap-y-4">
               <div className="flex items-center gap-x-10 py-3 rounded-lg mt-4 bg-app-slate px-4">
-                <Select>
+                <Select onValueChange={value => setSelectedAsset(value)}>
                   <SelectTrigger className="w-64 border-app-purple text-app-charteuse">
-                    <SelectValue placeholder="Theme" />
+                    <SelectValue placeholder="Select Asset" />
                   </SelectTrigger>
                   <SelectContent className="mt-4 w-64 bg-app-purple text-app-mauve hover:bg-app-purple hover:text-slate-100">
                     <SelectItem value="bld">BLD</SelectItem>
@@ -63,13 +68,20 @@ export const BorrowModal: React.FC<{
               </div>
               <div className="flex justify-between items-center text-lg">
                 <p className="text-app-violet">Your Balance</p>
-                <p className="text-app-purple">230</p>
+                <p className="text-app-purple">
+                  {Number(selectedPurse?.currentAmount.value) /
+                    Math.pow(
+                      10,
+                      selectedPurse?.displayInfo?.decimalPlaces ?? 0,
+                    ) || '0'}{' '}
+                  {selectedAsset.toUpperCase()}
+                </p>
               </div>
 
               <DialogClose className="w-full">
                 <Button
                   className="relative inline-flex items-center justify-center w-full h-12 px-4 py-3 align-middle font-medium group mt-6 rounded-lg"
-                  onClick={handleSupplyClick} // Handle the click here
+                  onClick={handleSupplyClick}
                 >
                   <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform rounded-lg translate-x-1 translate-y-1 bg-app-mauve group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
                   <span className="absolute inset-0 w-full h-full bg-white border-2 border-app-mauve rounded-lg group-hover:bg-app-mauve"></span>
@@ -84,7 +96,7 @@ export const BorrowModal: React.FC<{
       </Dialog>
 
       <SuccessModal
-        isOpen={openSuccessModal} // Use openSuccessModal state to control visibility
+        isOpen={openSuccessModal}
         setIsOpen={setOpenSuccessModal}
         action={'Borrow'}
         txnHash={txnHash}

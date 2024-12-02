@@ -111,7 +111,13 @@ export const LendTable: React.FC = () => {
                 <TableCell>
                   {(balances.find(
                     coin => 'u' + detail.asset.toLowerCase() === coin.denom,
-                  )?.amount ?? 0) / Math.pow(10, 6)}
+                  )?.amount ?? 0) / Math.pow(10, 6)}{' '}
+                  {detail.asset} | $
+                  {((balances.find(
+                    coin => 'u' + detail.asset.toLowerCase() === coin.denom,
+                  )?.amount ?? 0) /
+                    Math.pow(10, 6)) *
+                    detail.price}
                 </TableCell>
               )}
               {wallet && <TableCell>0</TableCell>}

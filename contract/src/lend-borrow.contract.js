@@ -1,7 +1,6 @@
 import { InvitationShape } from '@agoric/zoe/src/typeGuards.js';
 import { E } from '@endo/far';
 import { M } from '@endo/patterns';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { withOrchestration } from '@agoric/orchestration';
 import { prepareChainHubAdmin } from '../utils/chain-hub-admin.js';
 import { AnyNatAmountShape } from '../utils/typeGuards.js';

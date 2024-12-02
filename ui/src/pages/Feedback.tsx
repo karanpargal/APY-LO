@@ -86,7 +86,7 @@ export const FeedbackForm: React.FC = () => {
                 <FormControl>
                   <Input
                     className="w-full text-left bg-app-slate/20 text-app-purple placeholder:text-app-purple/40 p-2"
-                    placeholder="0x1234567890ABCDEF"
+                    placeholder="agoric...."
                     {...field}
                   />
                 </FormControl>
