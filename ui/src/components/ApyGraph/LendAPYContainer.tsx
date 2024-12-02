@@ -4,7 +4,6 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { ComputedReserveData } from '@/utils/types/shared-types';
 import { LendAPYGraph } from './LendAPYGraph';
-import { desc } from 'motion/react-client';
 
 export const LendAPYContainer = (): JSX.Element => {
   const [inputs, setInputs] = useState<ComputedReserveData>({
@@ -57,7 +56,7 @@ export const LendAPYContainer = (): JSX.Element => {
   return (
     <div className="z-30 relative">
       <h2 className="text-3xl font-bold text-app-purple">Lend APY</h2>
-      <div className="my-10 p-6 rounded-lg flex items-center justify-between shadow-lg bg-gray">
+      <div className="my-10 p-6 rounded-lg flex items-center justify-between shadow-lg bg-gray gap-4">
         <div className="flex flex-col w-1/2">
           {inputFields.map((field, index) => (
             <div key={index} className="flex flex-col gap-2 mt-2">

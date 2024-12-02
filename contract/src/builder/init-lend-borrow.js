@@ -1,134 +1,151 @@
-import { makeTracer } from '@agoric/internal';
-import { E } from '@endo/far';
+/**
+ * @file build core eval script to deploy lend-borrow contract
+ *
+ * Usage:
+ *   agoric run init-lend-borrow.js
+ * or
+ *   agoric run init-lend-borrow.js --net emerynet \
+ *     --peer osmosis:connection-128:channel-115:uosmo
+ *
+ * where connection-128 is a connection to a chain that we'll call osmosis,
+ * with channel-115 for transfer and staking token denom uosmo.
+ */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { harden } from '@agoric/vat-data';
+import { makeHelpers } from '@agoric/deploy-script-support';
+import {
+  CosmosChainInfoShape,
+  IBCConnectionInfoShape,
+} from '@agoric/orchestration/src/typeGuards.js';
+import { M, mustMatch } from '@endo/patterns';
+import { execFileSync } from 'node:child_process';
+import { parseArgs } from 'node:util';
+import {
+  getManifestForLendingBorrowing,
+  startLendingBorrowingContract,
+} from '../lending-borrow.proposal.js';
+import { makeAgd } from '../../tools/agd-lib.js';
 
-const trace = makeTracer('LendBorrowCE');
-const { entries, fromEntries } = Object;
+/**
+ * @import {CoreEvalBuilder} from '@agoric/deploy-script-support/src/externalTypes.js'
+ * @import {CosmosChainInfo, IBCConnectionInfo} from '@agoric/orchestration';
+ * @import {IBCChannelID, IBCConnectionID} from '@agoric/vats';
+ */
 
-trace('start proposal module evaluating');
-
-const contractName = 'lendingBorrowing';
-
-export const defaultChainDetails = harden({
-  agoric: {
-    chainId: 'agoriclocal',
-    stakingTokens: [{ denom: 'ubld' }, { denom: 'uist' }],
-  },
-});
-
-export const allValues = async obj => {
-  const es = await Promise.all(
-    entries(obj).map(([k, vp]) => E.when(vp, v => [k, v])),
-  );
-  return fromEntries(es);
+/** @type {import('node:util').ParseArgsConfig['options']} */
+const options = {
+  net: { type: 'string' },
+  peer: { type: 'string', multiple: true },
 };
+/** @typedef {{ net?: string, peer?: string[] }} LendBorrowOpts */
 
-export const startLendingBorrowingContract = async (permittedPowers, config) => {
-  trace('startLendingBorrowingContract()...', config);
-  console.log(permittedPowers);
-  console.log(config);
-  const {
-    consume: {
-      agoricNames,
-      board,
-      chainTimerService,
-      localchain,
-      chainStorage,
-      zoe,
-    },
-    installation: {
-      consume: { lendingBorrowing: lendingBorrowingInstallation },
-    },
-    instance: {
-      produce: { lendingBorrowing: produceInstance },
-    },
-  } = permittedPowers;
-
-  const installation = await lendingBorrowingInstallation;
-
-  const storageNode = await E(chainStorage).makeChildNode('lendingBorrowing');
-  const marshaller = await E(board).getPublishingMarshaller();
-
-  const { chainDetails: nameToInfo = defaultChainDetails, supportedTokens } =
-    config.options[contractName];
-
-  const startOpts = {
-    label: 'lendingBorrowing',
-    installation,
-    terms: { chainDetails: nameToInfo, supportedTokens },
-    privateArgs: {
-      localchain: await localchain,
-      storageNode,
-      timerService: await chainTimerService,
-      agoricNames: await agoricNames,
-      marshaller,
-      zoe: await zoe,
-    },
-  };
-
-  trace('startOpts', startOpts);
-  const { instance } = await E(zoe).startInstance(installation, undefined, startOpts.terms, startOpts.privateArgs);
-
-  trace(contractName, '(re)started WITH RESET');
-  produceInstance.reset();
-  produceInstance.resolve(instance);
-};
-
-const lendingBorrowingManifest = {
-  [startLendingBorrowingContract.name]: {
-    consume: {
-      agoricNames: true,
-      board: true,
-      chainStorage: true,
-      zoe: true,
-      localchain: true,
-      chainTimerService: true,
-    },
-    installation: {
-      produce: { lendingBorrowing: true },
-      consume: { lendingBorrowing: true },
-    },
-    instance: {
-      produce: { lendingBorrowing: true },
-    },
-  },
-};
-harden(lendingBorrowingManifest);
-
-
-export const getManifestForLendingBorrowing = (
-  { restoreRef },
-  { installKeys, chainDetails, supportedTokens },
+/** @type {CoreEvalBuilder} */
+export const defaultProposalBuilder = async (
+  { publishRef, install },
+  { chainDetails },
 ) => {
-  trace('getManifestForLendingBorrowing', installKeys);
   return harden({
-    manifest: lendingBorrowingManifest,
-    installations: {
-      [contractName]: restoreRef(installKeys[contractName]),
-    },
-    options: {
-      [contractName]: { chainDetails, supportedTokens },
-    },
+    sourceSpec: '../../src/lending-borrow.proposal.js',
+    getManifestCall: [
+      getManifestForLendingBorrowing.name,
+      {
+        installKeys: {
+          lendingBorrowing: publishRef(
+            install('../../src/lend-borrow.contract.js'),
+          ),
+        },
+        chainDetails,
+      },
+    ],
   });
 };
 
-export const permit = harden({
-  consume: {
-    agoricNames: true,
-    board: true,
-    chainStorage: true,
-    zoe: true,
-    localchain: true,
-    chainTimerService: true,
-  },
-  installation: {
-    consume: { lendingBorrowing: true },
-    produce: { lendingBorrowing: true },
-  },
-  instance: { produce: { lendingBorrowing: true } },
-  brand: { consume: { BLD: true, IST: true }, produce: {} },
-  issuer: { consume: { BLD: true, IST: true }, produce: {} },
-});
+export default async (homeP, endowments) => {
+  const { writeCoreEval } = await makeHelpers(homeP, endowments);
+  const { scriptArgs } = endowments;
+  /** @type {{ values: LendBorrowOpts }} */
+  const { values: flags } = parseArgs({ args: scriptArgs, options });
 
-export const main = startLendingBorrowingContract;
+  /** @param {string} net */
+  const getNetConfig = net =>
+    fetch(`https://${net}.agoric.net/network-config`)
+      .then(res => res.text())
+      .then(s => JSON.parse(s));
+
+  /** @param {string[]} strs */
+  const parsePeers = strs => {
+    /** @type {[name: string, conn: IBCConnectionID, chan: IBCChannelID, denom:string][]} */
+    // @ts-expect-error XXX ID syntax should be dynamically checked
+    const peerParts = strs.map(s => s.split(':'));
+    const badPeers = peerParts.filter(d => d.length !== 4);
+    if (badPeers.length) {
+      throw Error(
+        `peers must be name:connection-X:channel-Y:denom, not ${badPeers.join(', ')}`,
+      );
+    }
+    return peerParts;
+  };
+
+  /** @type {Record<string, CosmosChainInfo>} */
+  const chainDetails = {};
+
+  if (flags.net) {
+    if (!flags.peer) throw Error('--peer required');
+    /** @type {Record<string, IBCConnectionInfo>} */
+    const connections = {};
+    const portId = 'transfer';
+
+    const { chainName: chainId, rpcAddrs } = await getNetConfig(flags.net);
+    const agd = makeAgd({ execFileSync }).withOpts({ rpcAddrs });
+
+    for (const [peerName, myConn, myChan, denom] of parsePeers(flags.peer)) {
+      console.debug(peerName, { denom });
+      const connInfo = await agd
+        .query(['ibc', 'connection', 'end', myConn])
+        .then(x => x.connection);
+      const { client_id } = connInfo;
+      const clientState = await agd
+        .query(['ibc', 'client', 'state', client_id])
+        .then(x => x.client_state);
+      const { chain_id: peerId } = clientState;
+      console.debug(peerName, { chainId: peerId, denom });
+      chainDetails[peerName] = { chainId: peerId, stakingTokens: [{ denom }] };
+
+      const chan = await agd
+        .query(['ibc', 'channel', 'end', portId, myChan])
+        .then(r => r.channel);
+
+      /** @type {IBCConnectionInfo} */
+      const info = harden({
+        client_id,
+        counterparty: {
+          client_id: connInfo.counterparty.client_id,
+          connection_id: connInfo.counterparty.connection_id,
+          prefix: { key_prefix: 'arbitrary - not used?' },
+        },
+        id: myConn,
+        state: connInfo.state,
+        transferChannel: {
+          channelId: myChan,
+          counterPartyChannelId: chan.counterparty.channel_id,
+          counterPartyPortId: chan.counterparty.port_id,
+          ordering: chan.ordering,
+          portId,
+          state: chan.state,
+          version: chan.version,
+        },
+      });
+      mustMatch(info, IBCConnectionInfoShape);
+      connections[peerId] = info;
+    }
+
+    chainDetails['agoric'] = {
+      chainId,
+      stakingTokens: [{ denom: 'ubld' }],
+      connections,
+    };
+  }
+  mustMatch(harden(chainDetails), M.recordOf(M.string(), CosmosChainInfoShape));
+  await writeCoreEval(startLendingBorrowingContract.name, opts =>
+    defaultProposalBuilder(opts, { chainDetails }),
+  );
+};
