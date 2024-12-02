@@ -1,0 +1,17 @@
+{
+  "name": "startLendingBorrowingContract",
+  "script": "startLendingBorrowingContract.js",
+  "permit": "startLendingBorrowingContract-permit.json",
+  "bundles": [
+    {
+      "entrypoint": "../../src/lend-borrow.contract.js",
+      "bundleID": "b1-55345a4aa622eff218e17945a481493a174b66abeca3782709eef04880af3e9fda0fc9a1bdadd767e7c774ca12fd42b8bc272a076d39ee0a6e0f58c4f730233b",
+      "fileName": "/Users/karan/.agoric/cache/b1-55345a4aa622eff218e17945a481493a174b66abeca3782709eef04880af3e9fda0fc9a1bdadd767e7c774ca12fd42b8bc272a076d39ee0a6e0f58c4f730233b.json"
+    },
+    {
+      "entrypoint": "../../src/lending-borrow.proposal.js",
+      "bundleID": "b1-e46141a1f0609e181892b21c31d2a782662f5f620b17afd3685519a6bd2041f47a94ef2b77e81d9ae369c4c3a0ee4c7666966779bae8eae1712f3173c325e7cb",
+      "fileName": "/Users/karan/.agoric/cache/b1-e46141a1f0609e181892b21c31d2a782662f5f620b17afd3685519a6bd2041f47a94ef2b77e81d9ae369c4c3a0ee4c7666966779bae8eae1712f3173c325e7cb.json"
+    }
+  ]
+}
